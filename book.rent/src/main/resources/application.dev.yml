@@ -1,7 +1,7 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/book_rent_app
-    username: admin
+    username: username
     password: root
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -28,6 +28,7 @@ spring:
         connectiontimeout: 5000
         timeout: 3000
         writetimeout: 5000
+
 application:
   security:
     jwt:
@@ -41,5 +42,11 @@ application:
   file:
     uploads:
       photos-output-path: ./uploads
+
+springdoc:
+  default-produces-media-type: application/json
+
 server:
   port: 8088
+  servlet:
+    context-path: /api/v1/
