@@ -1,5 +1,7 @@
 package com.book.rent.user;
 
+import com.book.rent.book.Book;
+import com.book.rent.history.BookTransactionHistory;
 import com.book.rent.roles.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,6 +42,10 @@ public class User implements UserDetails, Principal {
     private boolean accountLocked;
     private boolean enabled;
 
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> histories;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -90,7 +96,7 @@ public class User implements UserDetails, Principal {
         return enabled;
     }
 
-    private String fullName() {
+    public String fullName() {
         return firstname + " " + lastname;
     }
 }
