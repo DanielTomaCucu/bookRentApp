@@ -1,5 +1,6 @@
 package com.book.rent.book;
 
+import com.book.rent.file.FileUtils;
 import com.book.rent.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class BookMapper {
                 .archived(book.isArchived())
                 .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
-                //.cover
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }
 
@@ -42,7 +43,7 @@ public class BookMapper {
                 .isbn(history.getBook().getIsbn())
                 .rate(history.getBook().getRate())
                 .returned(history.isReturned())
-                .returnApproved(history.isReturnApproved())
+                .returnApproved(history.isReturnedApproved())
                 //.cover
                 .build();
     }
