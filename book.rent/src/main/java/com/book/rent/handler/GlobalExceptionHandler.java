@@ -1,5 +1,6 @@
 package com.book.rent.handler;
 
+import com.book.rent.exception.OperationNotPermitedException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,5 +80,16 @@ public class GlobalExceptionHandler {
                         .businessErrorDescription("Internal error, contact the admin")
                         .error(exp.getMessage())
                         .build());
+    }
+
+    @ExceptionHandler(OperationNotPermitedException.class)
+    public ResponseEntity<ExceptionResponse> handleException(OperationNotPermitedException exp) {
+        exp.printStackTrace();
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ExceptionResponse.builder()
+                        .error(exp.getMessage())
+                        .build());
+
     }
 }
