@@ -5,8 +5,7 @@ FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 
 # Copy the pom.xml file and the source code to /app
-COPY pom.xml .
-COPY src ./src
+
 COPY . .
 # Run the Maven build to package the application
 RUN mvn clean package -DskipTests
