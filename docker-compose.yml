@@ -27,9 +27,11 @@ services:
       - spring-demo
 
   spring-app:
-    build: .
+    build:
+      context: ./book.rent
+      dockerfile: Dockerfile
     ports:
-      - "8088:8080"
+      - "8088:8088"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-sql-bra:5432/book_rent_app
       SPRING_DATASOURCE_USERNAME: username
