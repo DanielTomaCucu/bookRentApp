@@ -117,7 +117,7 @@ public class BookService {
         if (!Objects.equals(book.getOwner().getId(), user.getId())) {
             throw new OperationNotPermitedException("You cannot update books shareable status");
         }
-        book.setShareable(!book.isShareable());
+        book.setSharable(!book.isSharable());
         bookRepository.save(book);
         return bookId;
     }
@@ -141,7 +141,7 @@ public class BookService {
         if (Objects.equals(book.getOwner().getId(), user.getId())) {
             throw new OperationNotPermitedException("You cannot borrow your own book");
         }
-        if (!book.isShareable() || book.isArchived()) {
+        if (!book.isSharable() || book.isArchived()) {
             throw new OperationNotPermitedException("The requested book cannot be borrowed since is archived or already shared");
         }
         final boolean isAlreadyBorrowed = transactionHistoryRepository.isAlreadyBorrowedByUser(bookId, user.getId());
@@ -161,7 +161,7 @@ public class BookService {
     public Integer returnBorrowedBook(Integer bookId, Authentication connectedUser) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new EntityNotFoundException("No book found with id ::" + bookId));
-        if (book.isArchived() || !book.isShareable()) {
+        if (book.isArchived() || !book.isSharable()) {
             throw new OperationNotPermitedException("The requested book cannot be borrowed ");
         }
         User user = ((User) connectedUser.getPrincipal());
@@ -182,7 +182,7 @@ public class BookService {
         if (!Objects.equals(book.getOwner().getId(), user.getId())) {
             throw new OperationNotPermitedException("You cannot approved books that are not belongs to you");
         }
-        if (book.isArchived() || !book.isShareable()) {
+        if (book.isArchived() || !book.isSharable()) {
             throw new OperationNotPermitedException("The requested book cannot be borrowed ");
         }
         BookTransactionHistory bookTransactionHistory = transactionHistoryRepository.findByBookIdAndOwnerId(bookId, user.getId())

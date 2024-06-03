@@ -13,7 +13,7 @@ public class FeedbackMapper {
                 .comment(request.comments())
                 .book(Book.builder()
                         .id(request.bookId())
-                        .shareable(false)
+                        .sharable(false)
                         .archived(false)
                         .build()
                 )
